@@ -1,6 +1,6 @@
 
 import WebGL from "three/examples/jsm/capabilities/WebGL.js";
-import ThreeJsGame from "./game/ThreeJsGame";
+import MyGame from "./game/MyGame";
 
 function main()
 {
@@ -10,7 +10,7 @@ function main()
         console.log(`WEBGL IS NOT COMPATIBLE!\nError:\n${warning}`);
     }
 
-    let game = new ThreeJsGame(
+    let game = new MyGame(
         document.querySelector("#rendering-canvas")
     );
 

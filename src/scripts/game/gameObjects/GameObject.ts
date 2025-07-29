@@ -1,6 +1,4 @@
 
-import * as THREE from "three";
-
 export default class GameObject
 {
     public constructor()

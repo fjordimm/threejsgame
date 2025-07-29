@@ -1,11 +1,12 @@
 
 import GameState from "./gameState/GameState";
 
-export default abstract class Game
+export default abstract class Game<T extends GameState>
 {
     public readonly gameState: GameState;
+    private oldTime: number;
 
-    constructor(renderingCanvas: Element|null)
+    public constructor(renderingCanvas: Element|null)
     {
         if (renderingCanvas === null)
         {
@@ -13,9 +14,15 @@ export default abstract class Game
         }
         else
         {
-            this.gameState = new GameState(renderingCanvas);
+            this.gameState = this.constructGameState(renderingCanvas);
+            this.oldTime = 0;
         }
     }
+
+    /**
+     * For the child class to implement. It should just return a `new T(...)`.
+     */
+    protected abstract constructGameState(renderingCanvas: Element): T;
 
     public start(): void
     {
@@ -36,7 +43,8 @@ export default abstract class Game
                 gameState.mainCamera.ren.updateProjectionMatrix();
             }
 
-            thiz.onFrame(gameState, time, -1);
+            thiz.onFrame(gameState, time, time - thiz.oldTime);
+            thiz.oldTime = time;
 
             gameState.renderer.render(gameState.mainRenderingScene, gameState.mainCamera.ren)
             requestAnimationFrame(onAnimationFrame);
