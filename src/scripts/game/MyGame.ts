@@ -6,6 +6,8 @@ import GameEntity from "./gameObjects/GameEntity";
 
 export default class MyGame extends Game<MyGameState>
 {
+    public thingy: GameEntity = GameEntity.EMPTY;
+
     public constructor(renderingCanvas: Element|null)
     {
         super(renderingCanvas);
@@ -18,15 +20,15 @@ export default class MyGame extends Game<MyGameState>
 
     override onStart(gameState: MyGameState): void
     {
-        gameState.mainCamera.ren.position.set(0, 0, 15);
+        gameState.mainCamera.ren.position.set(0, 0, 5);
 
-        gameState.cube = new GameEntity(
+        this.thingy = new GameEntity(
             new THREE.Mesh(
-                new THREE.BoxGeometry(1, 1, 1),
+                new THREE.TorusKnotGeometry(1, 0.5, 100, 30, 2, 3),
                 new THREE.MeshStandardMaterial({ color: 0x00FF00, roughness: 0.5, metalness: 0 })
             )
         );
-        gameState.gameObjectManager.add(gameState.cube);
+        gameState.gameObjectManager.add(this.thingy);
 
         const sun = new THREE.DirectionalLight(0xFFFFFF, 1);
         sun.position.set(3, 10, -3);
@@ -38,7 +40,7 @@ export default class MyGame extends Game<MyGameState>
 
     override onFrame(gameState: MyGameState, time: number, deltaTime: number): void
     {
-        gameState.cube.ren.rotation.x = time * 0.001;
-        gameState.cube.ren.rotation.y = time * 0.001;
+        this.thingy.ren.rotation.x = time * 0.001;
+        this.thingy.ren.rotation.y = time * 0.001;
     }
 }
