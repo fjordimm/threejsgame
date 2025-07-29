@@ -1,9 +1,9 @@
 
 import GameState from "./gameState/GameState";
 
-export default abstract class Game<T extends GameState>
+export default abstract class Game<TGameState extends GameState>
 {
-    public readonly gameState: GameState;
+    public readonly gameState: TGameState;
     private oldTime: number;
 
     public constructor(renderingCanvas: Element|null)
@@ -22,7 +22,7 @@ export default abstract class Game<T extends GameState>
     /**
      * For the child class to implement. It should just return a `new T(...)`.
      */
-    protected abstract constructGameState(renderingCanvas: Element): T;
+    protected abstract constructGameState(renderingCanvas: Element): TGameState;
 
     public start(): void
     {
@@ -53,7 +53,7 @@ export default abstract class Game<T extends GameState>
         requestAnimationFrame(onAnimationFrame);
     }
 
-    public abstract onStart(gameState: GameState): void;
+    public abstract onStart(gameState: TGameState): void;
 
-    public abstract onFrame(gameState: GameState, time: number, deltaTime: number): void;
+    public abstract onFrame(gameState: TGameState, time: number, deltaTime: number): void;
 }
