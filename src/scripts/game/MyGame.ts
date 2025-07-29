@@ -6,13 +6,9 @@ import GameEntity from "./gameObjects/GameEntity";
 
 export default class MyGame extends Game<MyGameState>
 {
-    // private cube: THREE.Mesh;
-
     public constructor(renderingCanvas: Element|null)
     {
         super(renderingCanvas);
-
-        // this.cube = new THREE.Mesh();
     }
 
     protected override constructGameState(renderingCanvas: Element): MyGameState
@@ -23,12 +19,6 @@ export default class MyGame extends Game<MyGameState>
     override onStart(gameState: MyGameState): void
     {
         gameState.mainCamera.ren.position.set(0, 0, 15);
-
-        // this.cube = new THREE.Mesh(
-        //     new THREE.BoxGeometry(1, 1, 1),
-        //     new THREE.MeshStandardMaterial({ color: 0xFF0000, roughness: 0.5, metalness: 0 })
-        // );
-        // gameState.mainRenderingScene.add(this.cube);
 
         gameState.cube = new GameEntity(
             new THREE.Mesh(
