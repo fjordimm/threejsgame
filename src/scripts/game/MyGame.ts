@@ -2,11 +2,11 @@
 import * as THREE from "three";
 import Game from "./Game";
 import MyGameState from "./gameState/MyGameState";
-import GameEntity from "./gameObjects/GameEntity";
+import Form from "./forms/Form";
 
 export default class MyGame extends Game<MyGameState>
 {
-    public thingy: GameEntity = GameEntity.EMPTY;
+    public thingy: Form = Form.EMPTY;
 
     public constructor(renderingCanvas: Element|null)
     {
@@ -20,15 +20,15 @@ export default class MyGame extends Game<MyGameState>
 
     override onStart(gameState: MyGameState): void
     {
-        gameState.mainCamera.ren.position.set(0, 0, 5);
+        gameState.mainCamera.ren!.position.set(0, 0, 5); // TODO: change
 
-        this.thingy = new GameEntity(
+        this.thingy = new Form(
             new THREE.Mesh(
-                new THREE.TorusKnotGeometry(1, 0.5, 100, 30, 2, 3),
+                new THREE.BoxGeometry(1, 1, 1),
                 new THREE.MeshStandardMaterial({ color: 0x00FF00, roughness: 0.5, metalness: 0 })
             )
         );
-        gameState.gameObjectManager.add(this.thingy);
+        gameState.formManager.add(this.thingy);
 
         const sun = new THREE.DirectionalLight(0xFFFFFF, 1);
         sun.position.set(3, 10, -3);
@@ -40,7 +40,7 @@ export default class MyGame extends Game<MyGameState>
 
     override onFrame(gameState: MyGameState, time: number, deltaTime: number): void
     {
-        this.thingy.ren.rotation.x = time * 0.001;
-        this.thingy.ren.rotation.y = time * 0.001;
+        this.thingy.ren!.rotation.x = time * 0.001;
+        this.thingy.ren!.rotation.y = time * 0.001;
     }
 }

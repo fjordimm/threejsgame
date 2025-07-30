@@ -1,8 +1,8 @@
 
 import * as THREE from "three";
-import GameEntity from "../GameEntity";
+import Form from "../Form";
 
-export default class Camera extends GameEntity<THREE.PerspectiveCamera>
+export default class Camera extends Form<THREE.PerspectiveCamera>
 {
     public constructor()
     {

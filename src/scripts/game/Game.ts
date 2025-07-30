@@ -39,14 +39,14 @@ export default abstract class Game<TGameState extends GameState>
             {
                 gameState.renderer.setSize(gameState.renderer.domElement.clientWidth, gameState.renderer.domElement.clientHeight, false);
 
-                gameState.mainCamera.ren.aspect = gameState.renderer.domElement.clientWidth / gameState.renderer.domElement.clientHeight;
-                gameState.mainCamera.ren.updateProjectionMatrix();
+                gameState.mainCamera.ren!.aspect = gameState.renderer.domElement.clientWidth / gameState.renderer.domElement.clientHeight;
+                gameState.mainCamera.ren!.updateProjectionMatrix();
             }
 
             thiz.onFrame(gameState, time, time - thiz.oldTime);
             thiz.oldTime = time;
 
-            gameState.renderer.render(gameState.mainRenderingScene, gameState.mainCamera.ren)
+            gameState.renderer.render(gameState.mainRenderingScene, gameState.mainCamera.ren!)
             requestAnimationFrame(onAnimationFrame);
         }
 
