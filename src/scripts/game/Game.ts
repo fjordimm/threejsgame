@@ -1,4 +1,5 @@
 
+import type Form from "./forms/Form";
 import GameState from "./gameState/GameState";
 
 export default abstract class Game<TGameState extends GameState>
@@ -53,7 +54,22 @@ export default abstract class Game<TGameState extends GameState>
         requestAnimationFrame(onAnimationFrame);
     }
 
-    public abstract onStart(gameState: TGameState): void;
+    public onStart(gameState: TGameState): void
+    {
+        this.gameState.formManager.add(this.gameState.mainCamera);
 
-    public abstract onFrame(gameState: TGameState, time: number, deltaTime: number): void;
+        this.v_onStart(gameState);
+    }
+
+    protected abstract v_onStart(gameState: TGameState): void;
+
+    public onFrame(gameState: TGameState, time: number, deltaTime: number): void
+    {
+        for (const form of gameState.formManager.values())
+        { form.onFrame(gameState, time, deltaTime); }
+
+        this.v_onFrame(gameState, time, deltaTime);
+    }
+
+    protected abstract v_onFrame(gameState: TGameState, time: number, deltaTime: number): void;
 }

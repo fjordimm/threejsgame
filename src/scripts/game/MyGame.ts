@@ -18,9 +18,9 @@ export default class MyGame extends Game<MyGameState>
         return new MyGameState(renderingCanvas);
     }
 
-    override onStart(gameState: MyGameState): void
+    override v_onStart(gameState: MyGameState): void
     {
-        gameState.mainCamera.ren!.position.set(0, 0, 5); // TODO: change
+        gameState.mainCamera.tran.pos.set(0, 0, 5);
 
         this.thingy = new Form(
             new THREE.Mesh(
@@ -38,9 +38,8 @@ export default class MyGame extends Game<MyGameState>
         gameState.mainRenderingScene.add(ambLight);
     }
 
-    override onFrame(gameState: MyGameState, time: number, deltaTime: number): void
+    override v_onFrame(gameState: MyGameState, time: number, deltaTime: number): void
     {
-        this.thingy.ren!.rotation.x = time * 0.001;
-        this.thingy.ren!.rotation.y = time * 0.001;
+        this.thingy.tran.rot.setFromEuler(new THREE.Euler(time * 0.001, time * 0.001, 0));
     }
 }
